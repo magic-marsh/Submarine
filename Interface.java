@@ -1,7 +1,6 @@
 import java.util.Scanner;
 public class Interface{
     public static void main(String args[]){
-        //FIXME:操作ミスをした時の処理が出来ていない！！
         String command; //コマンド
         int x;
         int y;
@@ -16,13 +15,18 @@ public class Interface{
         System.out.println("info　：自機の位置、攻撃用マップ、移動用マップを表示する");
         System.out.println("exit　：プログラムを終了する");
 
+        System.out.println("emagency:最終手段");
+        System.out.println("undo  :一手前に戻る（infoなどを利用すると使えなくなる）");
+
         System.out.println("-------------------------------------------------------------------");
         while(true){
             command=""; direction=""; x=0; y=0;//初期化
-            System.err.print("Please,imput command: ");
+            //c.remenber();
+            System.err.print("Please,input command: ");
             try {
                 command =sc.next();
                 if(command.equals("ak")){
+                    c.remenber();
                     try {
                         y = sc.nextInt();
                         x = sc.nextInt();
@@ -32,6 +36,7 @@ public class Interface{
                     }
                     ak(c,x,y);
                 }else if(command.equals("mv")){
+                    c.remenber();
                     try {
                         direction = sc.next();
                         x =sc.nextInt();
@@ -47,6 +52,23 @@ public class Interface{
                     c.myTurn();
                 }else if(command.equals("info")){
                     c.information();
+                }else if(command.equals("undo")){
+                    c.redo();
+                }else if(command.equals("emagency")){
+                    c.initialize();
+                    int hp;
+                    while(true){
+                        try {
+                            y = sc.nextInt();
+                            x = sc.nextInt();
+                            hp = sc.nextInt();
+
+                        } catch (Exception e) {
+                            System.out.println("終了");
+                            break;
+                        }
+                        c.setMyPlace(x, y, hp);
+                    }
                 }else{
                     System.out.println("コマンドが違います");
                     continue;
